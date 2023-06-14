@@ -8,11 +8,12 @@ const {
     verifyotp,
     resetpassword,
   } = require("../controllers/student.controller");
+
   const StudentRouter = require("express").Router();
 
-  // const { passport } = require("../config/google_oauth");
+  const { passport } = require("../config/google_Oauth");
   const { StudentModel } = require("../models/StudentModel");
-//   const { auth } = require("../middlewares/auth");
+  const { auth } = require("../middlewares/auth.middleware");
   const bcrypt = require("bcrypt");
   const jwt = require("jsonwebtoken");
   const path = require("path");
@@ -25,7 +26,7 @@ const {
   
   StudentRouter.post("/register", registerNewUser);
   StudentRouter.post("/login", loginUser);
-  StudentRouter.get("/logout",logoutUser);
+  StudentRouter.get("/logout",auth,logoutUser);
   StudentRouter.get("/refresh-token", NewAccessToken);
   StudentRouter.post("/getotp", getotp);
   StudentRouter.post("/verifyotp", verifyotp);
