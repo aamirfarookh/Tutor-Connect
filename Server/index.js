@@ -1,5 +1,6 @@
 const express= require("express")
 const app=express()
+const cookieParser = require("cookie-parser")
 app.use(express.json())
 require("dotenv").config()
 const {Connection}=require("./config/db")
@@ -7,10 +8,12 @@ const { StudentRouter } = require("./routes/studentRoutes")
 
 
 
+
 app.get("/",(req,res)=>{
     res.send("everything is going fine")
 })
 
+app.use(cookieParser());
 app.use("/student",StudentRouter)
 
 
