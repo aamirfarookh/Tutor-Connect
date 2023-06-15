@@ -34,19 +34,19 @@ const adminlogin = async (req, res) => {
         const accessToken = jwt.sign(
             { userId: isAdminPresent._id },
             process.env.JWT_ACCESS_TOKEN_SECRET_KEY,
-            { expiresIn: 60 * 60 * 24 }
+            { expiresIn: "24hr" }
         );
 
         // Generating refresh token
         const refreshToken = jwt.sign(
             { userId: isAdminPresent._id },
             process.env.JWT_REFRESH_TOKEN_SECRET_KEY,
-            { expiresIn: 60 * 60 * 24 * 4 }
+            { expiresIn: "4d" }
         );
 
         // Storing tokens in cookies.
-        res.cookie("JAA_access_token", accessToken, { maxAge: 60 * 60 * 24 });
-        res.cookie("JAA_refresh_token", refreshToken, { maxAge: 60 * 60 * 24 * 4 });
+        res.cookie("JAA_access_token", accessToken);
+        res.cookie("JAA_refresh_token", refreshToken);
 
         res.status(200).send({ msg: " Admin Login successfull", accessToken, refreshToken });
     } catch (error) {
@@ -59,11 +59,11 @@ const adminlogin = async (req, res) => {
 // post request ==> (teacher create/ admin create)
 const adminRegister = async (req, res) => {
     try {
-        const { email, password, name } = req.body;
+        const { email, password, name , designation} = req.body;
         const isAdminPresent = await AdminModel.findOne({ email });
 
         // all fields presence check
-        if (!email || !password || !name) {
+        if (!email || !password || !name || !designation) {
             return res.status(400).send({ msg: "All feilds are required" });
         }
 
@@ -89,7 +89,7 @@ const adminRegister = async (req, res) => {
 //=================================================
 // create a new teacher
 
-const newTeacher = async (req, res) => {
+const createTeacher = async (req, res) => {
     try {
 
         const { name, subjects, availability, qualification, hourlyRate, email } = req.body;
@@ -123,7 +123,8 @@ const newTeacher = async (req, res) => {
 const updateTeacher = async (req, res) => {
     try {
         const  teacherId = req.params.id;
-        if (!email) {
+        console.log(teacherId)
+        if (!teacherId) {
             return res.status(400).send({ msg: "provide the ID of the teacher" })
         }
         const isTeacherPresent = TeacherModel.findOne({ teacherId })
@@ -131,7 +132,7 @@ const updateTeacher = async (req, res) => {
             return res.status(404).send({ msg: "No teacher found with this id" })
         }
         let updateteacher = await TeacherModel.findByIdAndUpdate(teacherId,req.body)
-        res.status(200).send({ msg: "Successfuly updated the teacher", updateteacher });
+        res.status(200).send({ msg: "Successfuly updated the teacher" });
 
 
     } catch (error) {
@@ -145,7 +146,7 @@ const updateTeacher = async (req, res) => {
 
 const getTeachers = async(req,res)=>{
     try {
-        const teachers = TeacherModel.find()
+        const teachers = await TeacherModel.find()
         res.status(200).send({teachers})
     } catch (error) {
         res.status(500).send({msg:error.message});
@@ -157,17 +158,19 @@ const getTeachers = async(req,res)=>{
 // delete teacher
 const deleteTeacher = async (req, res) => {
     try {
-        const { email } = req.body
-        if (!email) {
+        const teacherId = req.params.id
+        if (!teacherId) {
             return res.status(400).send({ msg: "provide the email of the teacher" })
         }
-        const isTeacherPresent = TeacherModel.findOne({ email })
+        const isTeacherPresent = TeacherModel.findOne({ teacherId })
         if (!isTeacherPresent) {
-            return res.status(404).send({ msg: "no teacher found with this email" })
+            return res.status(404).send({ msg: "no teacher found with this Id" })
         }
-        let upadteteacher = await TeacherModel.findOneAndDelete({email})
+        let deleteTeacher = await TeacherModel.findByIdAndDelete(teacherId)
         res.status(200).send({ msg: "Successfuly deleted the teacher"});
     } catch (error) {
         res.status(500).send({ msg: error.message });
     }
 }
+
+module.exports = {adminlogin,adminRegister,createTeacher,updateTeacher,getTeachers,deleteTeacher}

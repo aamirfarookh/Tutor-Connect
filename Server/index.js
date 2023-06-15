@@ -6,16 +6,28 @@ const expressSession = require("express-session")
 require("dotenv").config()
 const {Connection}=require("./config/db")
 const { StudentRouter } = require("./routes/studentRoutes")
+const { adminRouter } = require("./routes/admin.route")
 
 
 // Using all the required middlewares in the app
 app.use(express.json());
-app.use(expressSession());
+app.use(
+  expressSession({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: false, // set to true if using HTTPS
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
+  })
+);
 app.use(cookieParser());
 
 
 //Defining the student route
 app.use("/student",StudentRouter);
+app.use("/admin",adminRouter)
 
 
 

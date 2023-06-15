@@ -5,7 +5,7 @@ const { client } = require("../controllers/student.controller");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
-let auth = async (req, res, next) => {
+let adminAuth = async (req, res, next) => {
   const {JAA_access_token,JAA_refresh_token} = req?.cookies;
   const access_token = req.headers.authorization 
   if (!access_token) {
@@ -24,7 +24,7 @@ let auth = async (req, res, next) => {
             if (err.message == "jwt expired") {
               
               try {
-                const token = await fetch(`http://localhost:${process.env.PORT}/student/refresh-token`,{
+                const token = await fetch(`http://localhost:${process.env.PORT}/admin/refresh-token`,{
                   headers:{
                       "content-type":"application/json",
                       Authorization:JAA_refresh_token
@@ -44,7 +44,7 @@ let auth = async (req, res, next) => {
               req.body.userId = payload._id;
               next();
             } else {
-              res.status(400).send({ msg: err.message});
+              res.status(400).send({ msg: err.message,error:"THIS ONE" });
             }
           } else {
             req.body.userId = payload._id;
@@ -56,4 +56,4 @@ let auth = async (req, res, next) => {
   }
 };
 
-module.exports = { auth };
+module.exports = { adminAuth };
