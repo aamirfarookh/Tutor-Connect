@@ -6,7 +6,6 @@ const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 let auth = async (req, res, next) => {
-    // console.log(req.cookies)
   const {JAA_access_token,JAA_refresh_token} = req?.cookies;
   const access_token = req.headers.authorization 
   if (!access_token) {

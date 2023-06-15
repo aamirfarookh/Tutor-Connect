@@ -1,20 +1,30 @@
+//Importing all the required dependencies
 const express= require("express")
 const app=express()
 const cookieParser = require("cookie-parser")
-app.use(express.json())
+const expressSession = require("express-session")
 require("dotenv").config()
 const {Connection}=require("./config/db")
 const { StudentRouter } = require("./routes/studentRoutes")
 
 
+// Using all the required middlewares in the app
+app.use(express.json());
+app.use(expressSession());
+app.use(cookieParser());
 
 
+//Defining the student route
+app.use("/student",StudentRouter);
+
+
+
+// Basic route to check if server is running fine
 app.get("/",(req,res)=>{
     res.send("everything is going fine")
 })
 
-app.use(cookieParser());
-app.use("/student",StudentRouter)
+
 
 
 

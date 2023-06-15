@@ -170,13 +170,13 @@ const getotp = async (req, res) => {
     to: email,
     from: "aamirfarooqbhatt@gmail.com",
     subject: "Your OTP for Password Change",
-    text: `Hi!, welcome to Chessmate!`,
+    text: `Hi!, welcome to Tutor Connect!`,
     html: `<h2>Hello User</h2>
-          <h2>Welcome to CHESSMATE</h2>
+          <h2>Welcome to Tutor Connect</h2>
            <h3>As requested, we are sending you a One-Time Password (OTP) to facilitate your password change process. Please find your OTP below:</h3>
            <h2>OTP:${otp}</h2>
-           <h3>Thank you for choosing CHESSMATE for your account management needs.<br/>Best regards,<br/>
-               Team Chessmate</h3>
+           <h3>Thank you for choosing Tutor Connect for your account management needs.<br/>Best regards,<br/>
+               Team Tutor Connect</h3>
            `
   };
 
@@ -195,7 +195,7 @@ const getotp = async (req, res) => {
     console.log("Received OTP value: ", otp);
 
     // Store the OTP value in the session
-    // req.session.otp = otp;
+    req.session.otp = otp;
     // console.log("Stored OTP value: ", req.session.otp);
     res.send({ msg: "OTP is sent to email" });
   } catch (error) {
