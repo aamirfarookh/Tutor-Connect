@@ -1,26 +1,78 @@
 // import React from 'react'
-import { Container } from "@mui/system";
-import { Box, styled, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
+import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
+
+import {
+    one,two,three,threeone,threetwo, threethree, four, five,six,seven, eight, nine
+} from '../media/Schools/images'
+
+
 
 const Schools = () => {
-const CustomBox = styled(Box)(({ theme }) => ({
-    display: "flex",
-    justifyContent: "center",
-    gap: theme.spacing(5),
-    marginTop: theme.spacing(1),
-    // marginBottom: theme.spacing(1),
-    [theme.breakpoints.down("md")]: {
-        flexDirection: "column",
-        alignItems: "center",
-        textAlign: "center",
-    },
-    color: "#fff", height: "fit-content" ,width: '%', padding: "2rem", margin: '0 auto', textAlign: 'center', alignItems: 'center'
-}));
-      
+    const imgStyle={
+        width:'8rem'
+    }
+
   return (
-    <CustomBox sx={{outline: '1px solid black', margin: '0'}}>
-        <Box sx={{ bgcolor: '#cfe8fc', height: '100v' }} />
-    </CustomBox>
+    <Box sx={{ mt: 4, mb: 4, padding:'1rem 0'}}>
+        <Splide 
+            options={{
+                type: "loop",
+                drag: "free",
+                gap: '10rem',
+                arrows: false,
+                pagination: false,
+                perPage: 6,
+                autoScroll: {
+                pauseOnHover: false,
+                pauseOnFocus: false,
+                rewind: false,
+                speed: 1,
+                padding: '1rem'
+                }
+            }}
+            extensions={{ AutoScroll }}
+            >
+            <SplideSlide>
+                <img src={one} alt="" style={imgStyle}/>
+            </SplideSlide>
+            <SplideSlide>
+                <img src={two} alt="" style={imgStyle} />
+            </SplideSlide>
+            <SplideSlide>
+                <img src={three} alt="" style={imgStyle} />
+            </SplideSlide>
+            <SplideSlide>
+                <img src={threeone} alt="" style={imgStyle} />
+            </SplideSlide>
+            <SplideSlide>
+                <img src={threetwo} alt="" style={imgStyle} />
+            </SplideSlide>
+            <SplideSlide>
+                <img src={threethree} alt="" style={imgStyle} />
+            </SplideSlide>
+            <SplideSlide>
+                <img src={four} alt="" style={imgStyle} />
+            </SplideSlide>
+            <SplideSlide>
+                <img src={five} alt="" style={imgStyle} />
+            </SplideSlide>
+            <SplideSlide>
+                <img src={six} alt="" style={imgStyle} />
+            </SplideSlide>
+            <SplideSlide>
+                <img src={seven} alt="" style={imgStyle} />
+            </SplideSlide>
+            <SplideSlide>
+                <img src={eight} alt="" style={imgStyle} />
+            </SplideSlide>
+            <SplideSlide>
+                <img src={nine} alt="" style={imgStyle} />
+            </SplideSlide>
+        </Splide>
+    </Box>
   )
 }
 
