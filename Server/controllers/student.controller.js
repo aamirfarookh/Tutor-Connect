@@ -143,7 +143,7 @@ const NewAccessToken = async (req, res) => {
               { expiresIn: "24hr" }
             );
 
-            // Seting token in cookie again
+            // Setting token in cookie again
             res.cookie("JAA_access_token", newAccessToken, {
               maxAge: 60 * 60 * 24,
             });
@@ -226,6 +226,8 @@ const verifyotp = async (req, res) => {
     res.status(500).send({ msg: "Internal server error" });
   }
 };
+
+
 
 const resetpassword = async (req, res) => {
   try {

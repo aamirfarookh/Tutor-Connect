@@ -15,7 +15,8 @@ const TeacherSchema =mongoose.Schema({
     hourlyRate: {
       type: Number,
       required: true
-    }
+    },
+    email:{type:String,required:true}
   });
 
   const TeacherModel=mongoose.model("teacher",TeacherSchema)
