@@ -78,19 +78,19 @@ const loginUser = async (req, res) => {
     const accessToken = jwt.sign(
       { userId: isUserPresent._id },
       process.env.JWT_ACCESS_TOKEN_SECRET_KEY,
-      { expiresIn: 60 * 60 * 24 }
+      { expiresIn: "24hr" }
     );
 
     // Generating refresh token
     const refreshToken = jwt.sign(
       { userId: isUserPresent._id },
       process.env.JWT_REFRESH_TOKEN_SECRET_KEY,
-      { expiresIn: 60 * 60 * 24 * 4 }
+      { expiresIn: "4d"}
     );
 
     // Storing tokens in cookies.
-    res.cookie("JAA_access_token", accessToken, { maxAge: 60 * 60 * 24 });
-    res.cookie("JAA_refresh_token", refreshToken, { maxAge: 60 * 60 * 24 * 4 });
+    res.cookie("JAA_access_token", accessToken);
+    res.cookie("JAA_refresh_token", refreshToken,);
 
     res.status(200).send({ msg: "Login success", accessToken, refreshToken });
   } catch (error) {
@@ -144,9 +144,7 @@ const NewAccessToken = async (req, res) => {
             );
 
             // Setting token in cookie again
-            res.cookie("JAA_access_token", newAccessToken, {
-              maxAge: 60 * 60 * 24,
-            });
+            res.cookie("JAA_access_token", newAccessToken);
 
             res.status(200).send({ msg: "Token generated", newAccessToken });
           }

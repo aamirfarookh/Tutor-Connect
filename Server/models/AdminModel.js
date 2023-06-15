@@ -16,7 +16,7 @@ const AdminSchema= mongoose.Schema({
         },
         designation:{
             type:String, 
-            requireed:true
+            required:true
         }
 })
 
