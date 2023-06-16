@@ -1,0 +1,7 @@
+const testimonials=[
+    {},{}
+]
+
+export {
+    testimonials
+}

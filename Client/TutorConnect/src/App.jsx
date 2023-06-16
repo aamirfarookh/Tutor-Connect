@@ -1,7 +1,7 @@
 import Companies from "./Landing/Components/Companies";
-import Guide from "./Landing/Components/Guide";
+import Courses from "./Landing/Components/Courses";
 import Hero from "./Landing/Components/Hero";
-import Properties from "./Landing/Components/Properties";
+import Testimonials from "./Landing/Components/Testimonials";
 import Details from "./Landing/Components/Details";
 import GetStarted from "./Landing/Components/GetStarted";
 import Footer from "./Landing/Components/Footer";
@@ -17,8 +17,8 @@ function App() {
       <Companies />
       <SlidingImages1/>
       <Schools/>
-      <Guide />
-      <Properties />
+      <Courses />
+      <Testimonials />
       <Details />
       <GetStarted />
       <Footer />

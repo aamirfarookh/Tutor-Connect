@@ -6,7 +6,7 @@ import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 // import HomeIcon from "@mui/icons-material/Home";
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
@@ -137,7 +137,7 @@ export const Navbar = () => {
   }));
 
   return (
-    <NavbarContainer>
+    <NavbarContainer sx={{}}>
       <Box
         sx={{
           display: "flex",

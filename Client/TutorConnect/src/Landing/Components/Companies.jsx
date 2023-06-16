@@ -29,7 +29,7 @@ const Companies = () => {
     cursor: 'pointer'
   }
   return (
-    <Box sx={{ mt: 4, mb: 4 }}>
+    <Box sx={{ mt: 6, mb: 6 }}>
       <CustomContainer>
         <CustomBox>
           <img src={logoImg} alt="logo" style={{ maxWidth: "100%" }} />

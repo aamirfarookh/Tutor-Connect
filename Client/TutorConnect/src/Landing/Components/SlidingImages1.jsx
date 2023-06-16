@@ -24,7 +24,7 @@ const SlidingImages1 = () => {
 
     }
   return (
-    <Box sx={{ backgroundColor: '#F9FAFB',mt: 4, mb: 4, padding:'2rem 0', textAlign: 'center', display:'flex',
+    <Box sx={{ backgroundColor: '#F9FAFB',mt: 6, mb: 6, padding:'2rem 0', textAlign: 'center', display:'flex',
     flexDirection: 'column',gap: '5rem'}}>
         <Typography variant="h6" style={{letterSpacing: '5px'}}>
             COMPLETE MOBILE & WEB SOLUTION
@@ -36,7 +36,7 @@ const SlidingImages1 = () => {
                     gap:'1rem',
                     arrows: false,
                     pagination: false,
-                    perPage: 3,
+                    perPage: 5,
                     autoScroll: {
                     pauseOnHover: false,
                     pauseOnFocus: false,
