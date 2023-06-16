@@ -7,6 +7,7 @@ const {
     getotp,
     verifyotp,
     resetpassword,
+    bookaTeacher
   } = require("../controllers/student.controller");
   const StudentRouter = require("express").Router();
   const { passport } = require("../config/google_Oauth");
@@ -28,6 +29,7 @@ const {
   StudentRouter.post("/getotp", getotp);
   StudentRouter.post("/verifyotp", verifyotp);
   StudentRouter.post("/resetpassword", resetpassword);
+  StudentRouter.post("/bookteacher",bookaTeacher)
   
 
   // Defining Google OAuth route for Login/signup

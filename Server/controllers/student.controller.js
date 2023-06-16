@@ -250,6 +250,67 @@ const resetpassword = async (req, res) => {
   }
 };
 
+
+/// Book a teacher and the availibility
+ const bookaTeacher =async(req,res)=>{
+   try {
+    const {email,endtime,starttime,subject}= req.body
+
+    const isStudentpresent= await StudentModel.findOne({email})
+    if(!isStudentpresent){
+       res.status(404).send({msg:"invalid email of student"})
+    }
+
+    const isTeacherpresent= await TeacherModel.findOne(
+      {subjects: subject,
+        availability: { $in: [starttime.getDay()] },
+      }
+    )
+    if(!isTeacherpresent){
+       res.status(404).send({msg:"teacher is not available on this day , try another day"})
+    }
+  // checking the overlapping / conflict
+
+    const overlappingBooking = await StudentModel.findOne({
+      'bookings.teacher': isTeacherpresent._id,
+      $or: [
+        {
+          $and: [
+            { 'bookings.startTime': { $lte: starttime } },
+            { 'bookings.endTime': { $gt: starttime } },
+          ],
+        },
+        {
+          $and: [
+            { 'bookings.startTime': { $lt: endtime } },
+            { 'bookings.endTime': { $gte: endtime } },
+          ],
+        },
+      ],
+    });
+
+    if(overlappingBooking){
+      return res.status(400).json({msg:"teacher is not available , try another slot"})
+    }
+        
+    // Book the teacher for the student
+    student.bookings.push({
+      teacher: isTeacherpresent._id,
+      starttime,
+      endtime,
+    });
+
+    await student.save();
+
+    return res.status(200).json({ message: 'Teacher booked successfully' });
+
+   } catch (error) {
+      console.log(error)
+      res.status(500).json({msg:error.message})
+   }
+
+ }
+
 module.exports = {
   registerNewUser,
   loginUser,
@@ -259,6 +320,7 @@ module.exports = {
   getotp,
   verifyotp,
   resetpassword,
+  bookaTeacher
 };
 
 
