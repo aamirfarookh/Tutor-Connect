@@ -21,7 +21,7 @@ const {
 
   
  // Defining diferrent routes of the student router
-  StudentRouter.post("/register", registerNewUser);
+  StudentRouter.post("/register",registerNewUser);
   StudentRouter.post("/login", loginUser);
   StudentRouter.get("/logout",auth,logoutUser);
   StudentRouter.get("/refresh-token", NewAccessToken);
