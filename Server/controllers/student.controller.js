@@ -1,5 +1,6 @@
 
 const { StudentModel } = require("../models/StudentModel");
+const {TeacherModel}  = require("../models/TeacherModel")
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -254,20 +255,31 @@ const resetpassword = async (req, res) => {
 /// Book a teacher and the availibility
  const bookaTeacher =async(req,res)=>{
    try {
-    const {email,endtime,starttime,subject}= req.body
+    const {userId,endtime,starttime,subject}= req.body;
 
-    const isStudentpresent= await StudentModel.findOne({email})
+    
+    // Parse startTime and endTime into Date objects
+    const parsedStartTime = new Date(starttime);
+    const parsedEndTime = new Date(endtime);
+
+    
+
+    const options = {
+      weekday: 'long' // Extract the full name of the day (e.g., "Monday")
+    };
+
+    const isStudentpresent= await StudentModel.findOne({userId})
     if(!isStudentpresent){
-       res.status(404).send({msg:"invalid email of student"})
+      return  res.status(404).send({msg:"invalid email of student"})
     }
 
     const isTeacherpresent= await TeacherModel.findOne(
-      {subjects: subject,
-        availability: { $in: [starttime.getDay()] },
+      {subjects: { $in: subject },
+        availability: { $in: [parsedStartTime.toLocaleDateString('en-US', options)] },
       }
     )
     if(!isTeacherpresent){
-       res.status(404).send({msg:"teacher is not available on this day , try another day"})
+       return res.status(404).send({msg:"teacher is not available on this day , try another day"})
     }
   // checking the overlapping / conflict
 
@@ -276,14 +288,14 @@ const resetpassword = async (req, res) => {
       $or: [
         {
           $and: [
-            { 'bookings.startTime': { $lte: starttime } },
-            { 'bookings.endTime': { $gt: starttime } },
+            { 'bookings.startTime': { $lte: parsedStartTime } },
+            { 'bookings.endTime': { $gt: parsedStartTime } },
           ],
         },
         {
           $and: [
-            { 'bookings.startTime': { $lt: endtime } },
-            { 'bookings.endTime': { $gte: endtime } },
+            { 'bookings.startTime': { $lt: parsedEndTime } },
+            { 'bookings.endTime': { $gte: parsedEndTime } },
           ],
         },
       ],
@@ -294,22 +306,31 @@ const resetpassword = async (req, res) => {
     }
         
     // Book the teacher for the student
-    student.bookings.push({
+    isStudentpresent.bookings.push({
       teacher: isTeacherpresent._id,
-      starttime,
-      endtime,
+      startTime:parsedStartTime,
+      endTime:parsedEndTime,
     });
 
-    await student.save();
+    await isStudentpresent.save();
 
     return res.status(200).json({ message: 'Teacher booked successfully' });
 
    } catch (error) {
       console.log(error)
-      res.status(500).json({msg:error.message})
+      return res.status(500).json({msg:error.message})
    }
 
- }
+ };
+
+ const getTeachers = async(req,res)=>{
+  try {
+      const teachers = await TeacherModel.find()
+      res.status(200).send({teachers})
+  } catch (error) {
+      res.status(500).send({msg:error.message});
+  }
+};
 
 module.exports = {
   registerNewUser,
@@ -320,7 +341,8 @@ module.exports = {
   getotp,
   verifyotp,
   resetpassword,
-  bookaTeacher
+  bookaTeacher,
+  getTeachers
 };
 
 
