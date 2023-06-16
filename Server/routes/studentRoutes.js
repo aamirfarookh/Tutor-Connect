@@ -7,6 +7,7 @@ const {
     getotp,
     verifyotp,
     resetpassword,
+    bookaTeacher
   } = require("../controllers/student.controller");
   const StudentRouter = require("express").Router();
 
@@ -30,6 +31,7 @@ const {
   StudentRouter.post("/getotp", getotp);
   StudentRouter.post("/verifyotp", verifyotp);
   StudentRouter.post("/resetpassword", resetpassword);
+  StudentRouter.post("/bookteacher",bookaTeacher)
   
 //   StudentRouter.get(
 //     "/auth/google",
