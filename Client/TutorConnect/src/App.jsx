@@ -1,28 +1,18 @@
-import Download from "./Landing/Components/Download";
-import Courses from "./Landing/Components/Courses";
-import Hero from "./Landing/Components/Hero";
-import Testimonials from "./Landing/Components/Testimonials";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Landing from './Landing/Landing'
+import Signup from './LoginSignUp/Login'
 
-import GetStarted from "./Landing/Components/GetStarted";
-import Footer from "./Landing/Components/Footer";
-import Schools from "./Landing/Components/Schools";
-import SlidingImages1 from './Landing/Components/SlidingImages1'
+
 import './App.css'
-
 function App() {
 
   return (
-    <>
-      <Hero />
-      <Download />
-      <SlidingImages1/>
-      <Schools/>
-      <Courses />
-      <Testimonials />
-      <GetStarted />
-      <Footer />
-      <Download />
-    </>
+    <BrowserRouter>
+    <Routes>
+        <Route path="/" element={<Landing />} /> 
+        <Route path="/signup" element={<Signup />} /> 
+    </Routes>
+    </BrowserRouter>
   )
 }
 
