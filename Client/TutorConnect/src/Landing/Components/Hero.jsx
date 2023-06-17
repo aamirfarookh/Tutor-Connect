@@ -1,6 +1,7 @@
 import { Box, styled, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 // import React from "react";
+import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 
 import heroImg from "../media/hero-boy.png";
@@ -58,12 +59,14 @@ const Hero = () => {
             >
               Unlocking the true potential of education providers through cutting-edge technology!
             </Typography>
+            <Link to='/signup'>
             <CustomButton
               backgroundColor="#1DA1F2"
               color="#fff"
               buttonText="Get Started"
               heroBtn={true}
-            />
+              />
+            </Link>
           </Box>
 
           <Box sx={{ flex: "1" }}>

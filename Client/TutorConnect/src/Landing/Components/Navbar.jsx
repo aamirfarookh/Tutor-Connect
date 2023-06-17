@@ -1,4 +1,6 @@
 // import * as React from "react";
+import { Link } from "react-router-dom";
+
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -196,11 +198,14 @@ export const Navbar = () => {
           color="#1DA1F2"
           buttonText="Login"
           borderColor="#1DA1F2"/>
-        <CustomButton
-          backgroundColor="#1DA1F2"
-          color="#fff"
-          buttonText="Get Started"
-        />
+
+        <Link to='/signup'>
+          <CustomButton
+            backgroundColor="#1DA1F2"
+            color="#fff"
+            buttonText="Get Started"
+            />
+        </Link>
       </Box>
     </NavbarContainer>
   );
