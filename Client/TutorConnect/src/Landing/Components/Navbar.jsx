@@ -1,5 +1,6 @@
 // import * as React from "react";
 import { Link } from "react-router-dom";
+// import {AccordionDetails, Accordion, AccordionSummary} from "@mui/material";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -162,9 +163,9 @@ export const Navbar = () => {
 
         <NavbarLinksBox>
           <NavLink variant="body2">Solutions</NavLink>
-          {/* <Accordion>
+          {/* <CustomAccordian>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+              // expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
@@ -176,7 +177,7 @@ export const Navbar = () => {
                 malesuada lacus ex, sit amet blandit leo lobortis eget.
               </Typography>
             </AccordionDetails>
-          </Accordion> */}
+          </CustomAccordian> */}
           <NavLink variant="body2">Features</NavLink>
           <NavLink variant="body2">Plans</NavLink>
           <NavLink variant="body2">About Us</NavLink>
@@ -193,11 +194,13 @@ export const Navbar = () => {
           gap: "1rem",
         }}
       >
-        <CustomButton
-          backgroundColor="#fff"
-          color="#1DA1F2"
-          buttonText="Login"
-          borderColor="#1DA1F2"/>
+        <Link to='/login'>
+          <CustomButton
+            backgroundColor="#fff"
+            color="#1DA1F2"
+            buttonText="Login"
+            borderColor="#1DA1F2"/>
+        </Link>
 
         <Link to='/signup'>
           <CustomButton

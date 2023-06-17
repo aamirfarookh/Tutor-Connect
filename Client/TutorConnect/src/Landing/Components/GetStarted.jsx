@@ -3,6 +3,7 @@ import { Box, Container } from "@mui/system";
 // import React from "react";
 import homeIllustration from "../media/illus.png";
 import CustomButton from "./CustomButton";
+import { Link } from "react-router-dom";
 
 const GetStarted = () => {
   const CustomContainer = styled(Container)(({ theme }) => ({
@@ -44,13 +45,14 @@ const GetStarted = () => {
           >
             Digitize your school in minutes <br/> with Tutor Connect&apos;s Integrated Platform
           </Typography>
-
+          <Link to='/signup'>
           <CustomButton
             backgroundColor="#fff"
             color="#17275F"
             buttonText="Get Started"
             getStartedBtn={true}
-          />
+            />
+          </Link>
         </Box>
         <CustomBox1>
           <img
