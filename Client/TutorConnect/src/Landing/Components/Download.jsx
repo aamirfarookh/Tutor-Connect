@@ -6,7 +6,7 @@ import starsImg from "../media/Star.png";
 import appStoreBadge from '../media/app-store-badge.png'
 import playStoreBadge from '../media/google-play-badge.png'
 
-const Companies = () => {
+const Download = () => {
   const CustomContainer = styled(Container)(({ theme }) => ({
     display: "flex",
     justifyContent: "space-between",
@@ -72,4 +72,4 @@ const Companies = () => {
   );
 };
 
-export default Companies;
+export default Download;
