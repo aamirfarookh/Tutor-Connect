@@ -1,8 +1,8 @@
-import Companies from "./Landing/Components/Companies";
+import Download from "./Landing/Components/Download";
 import Courses from "./Landing/Components/Courses";
 import Hero from "./Landing/Components/Hero";
 import Testimonials from "./Landing/Components/Testimonials";
-import Details from "./Landing/Components/Details";
+
 import GetStarted from "./Landing/Components/GetStarted";
 import Footer from "./Landing/Components/Footer";
 import Schools from "./Landing/Components/Schools";
@@ -14,14 +14,14 @@ function App() {
   return (
     <>
       <Hero />
-      <Companies />
+      <Download />
       <SlidingImages1/>
       <Schools/>
       <Courses />
       <Testimonials />
-      <Details />
       <GetStarted />
       <Footer />
+      <Download />
     </>
   )
 }

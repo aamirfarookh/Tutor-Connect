@@ -27,10 +27,12 @@ const Footer = () => {
   }));
 
   const FooterLink = styled("span")(({ theme }) => ({
+    display: 'block',
     fontSize: "16px",
     color: "#7A7A7E",
     fontWeight: "300",
     cursor: "pointer",
+    padding: '0.1rem 0rem',
     "&:hover": {
       color: "#000",
     },
@@ -49,37 +51,22 @@ const Footer = () => {
                 mb: 2,
               }}
             >
-              Products
+              Solutions
             </Typography>
 
-            <FooterLink>Listing</FooterLink>
+            <FooterLink>Learning Management System</FooterLink>
             <br />
-            <FooterLink>Properties</FooterLink>
+            <FooterLink>Digital Content</FooterLink>
             <br />
-            <FooterLink>Agents</FooterLink>
+            <FooterLink>Assessments</FooterLink>
             <br />
-            <FooterLink>Blog</FooterLink>
-          </Box>
-
-          <Box>
-            <Typography
-              sx={{
-                fontSize: "20px",
-                color: "#1C1C1D",
-                fontWeight: "700",
-                mb: 2,
-              }}
-            >
-              Resources
-            </Typography>
-
-            <FooterLink>Our Homes</FooterLink>
+            <FooterLink>Student Information System</FooterLink>
             <br />
-            <FooterLink>Stories</FooterLink>
+            <FooterLink>Fee Management</FooterLink>
             <br />
-            <FooterLink>Video</FooterLink>
+            <FooterLink>Admission Management</FooterLink>
             <br />
-            <FooterLink>Free Trial</FooterLink>
+            <FooterLink>Student Tracking System</FooterLink>
           </Box>
 
           <Box>
@@ -94,13 +81,23 @@ const Footer = () => {
               Company
             </Typography>
 
-            <FooterLink>Partnerships</FooterLink>
+            <FooterLink>Home</FooterLink>
             <br />
-            <FooterLink>Terms of use</FooterLink>
+            <FooterLink>Features</FooterLink>
             <br />
-            <FooterLink>Privacy</FooterLink>
+            <FooterLink>Blog</FooterLink>
             <br />
-            <FooterLink>Sitemap</FooterLink>
+            <FooterLink>Partner</FooterLink>
+            <br />
+            <FooterLink>Privacy Policy</FooterLink>
+            <br />
+            <FooterLink>Terms of Service</FooterLink>
+            <br />
+            <FooterLink>Software Service Agreement</FooterLink>
+            <br />
+            <FooterLink>Annual Report</FooterLink>
+            <br />
+            <FooterLink>Glossary</FooterLink>
           </Box>
 
           <Box>
@@ -112,7 +109,28 @@ const Footer = () => {
                 mb: 2,
               }}
             >
-              Get in touch
+              Open Tools
+            </Typography>
+
+            <FooterLink>TimeTable Maker</FooterLink>
+            <br />
+            <FooterLink>Worksheet Maker</FooterLink>
+            <br />
+            <FooterLink>Lesson Planner</FooterLink>
+            <br />
+            <FooterLink>CBSE Result analyser</FooterLink>
+          </Box>
+
+          <Box>
+            <Typography
+              sx={{
+                fontSize: "20px",
+                color: "#1C1C1D",
+                fontWeight: "700",
+                mb: 2,
+              }}
+            >
+              Contact
             </Typography>
 
             <Typography
@@ -123,7 +141,7 @@ const Footer = () => {
                 mb: 2,
               }}
             >
-              You’ll find your next home, in any style you prefer.
+              5th Floor, SJR Primus,<br /> 20th Main Rd,<br /> next to Raheja Arcade,<br /> 5th Block, Koramangala,<br /> Bengaluru, Karnataka 560034
             </Typography>
 
             <IconBox>
