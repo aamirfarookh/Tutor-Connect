@@ -30,3 +30,9 @@ module.exports = {adminRouter}
 //     "availability":["Monday","Tuesday","Wednesday"],
 //     "hourlyRate":1000
 //   }
+
+// {
+//     "starttime":"2023-06-19T18:30:00+05:30",
+//     "endtime":"2023-06-19T19:00:00+05:30",
+//     "subject":"Physics"
+//    }

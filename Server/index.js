@@ -8,6 +8,8 @@ const {Connection}=require("./config/db")
 const { StudentRouter } = require("./routes/studentRoutes")
 const { adminRouter } = require("./routes/admin.route")
 
+const cors = require("cors")
+
 
 // Using all the required middlewares in the app
 app.use(express.json());
@@ -23,6 +25,8 @@ app.use(
   })
 );
 app.use(cookieParser());
+
+app.use(cors())
 
 
 //Defining the student route
