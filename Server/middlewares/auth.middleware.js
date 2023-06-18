@@ -17,7 +17,7 @@ let auth = async (req, res, next) => {
       return res.send({ msg: "please login again, already logged out" });
     } else {
       jwt.verify(
-        JAA_access_token,
+        access_token,
         process.env.JWT_ACCESS_TOKEN_SECRET_KEY,
         async (err, payload) => {
           if (!payload) {

@@ -93,7 +93,7 @@ const loginUser = async (req, res) => {
     res.cookie("JAA_access_token", accessToken);
     res.cookie("JAA_refresh_token", refreshToken,);
 
-    res.status(200).send({ msg: "Login success", accessToken, refreshToken });
+    res.status(200).send({ msg: "Login success", accessToken, refreshToken, user: isUserPresent});
   } catch (error) {
     res.status(500).send({ msg: error.message });
   }
@@ -252,76 +252,83 @@ const resetpassword = async (req, res) => {
 };
 
 
-/// Book a teacher and the availibility
  const bookaTeacher =async(req,res)=>{
-   try {
-    const {userId,endtime,starttime,subject}= req.body;
+  try {
+   const {userId,teacherEmail,endtime,starttime,subject}= req.body;
 
-    
-    // Parse startTime and endTime into Date objects
-    const parsedStartTime = new Date(starttime);
-    const parsedEndTime = new Date(endtime);
+   
+   // Parse startTime and endTime into Date objects
+   const parsedStartTime = new Date(starttime);
+   const parsedEndTime = new Date(endtime);
 
-    
+   
 
-    const options = {
-      weekday: 'long' // Extract the full name of the day (e.g., "Monday")
-    };
+   const options = {
+     weekday: 'long' // Extract the full name of the day (e.g., "Monday")
+   };
 
-    const isStudentpresent= await StudentModel.findOne({userId})
-    if(!isStudentpresent){
-      return  res.status(404).send({msg:"invalid email of student"})
-    }
-
-    const isTeacherpresent= await TeacherModel.findOne(
-      {subjects: { $in: subject },
-        availability: { $in: [parsedStartTime.toLocaleDateString('en-US', options)] },
-      }
-    )
-    if(!isTeacherpresent){
-       return res.status(404).send({msg:"teacher is not available on this day , try another day"})
-    }
-  // checking the overlapping / conflict
-
-    const overlappingBooking = await StudentModel.findOne({
-      'bookings.teacher': isTeacherpresent._id,
-      $or: [
-        {
-          $and: [
-            { 'bookings.startTime': { $lte: parsedStartTime } },
-            { 'bookings.endTime': { $gt: parsedStartTime } },
-          ],
-        },
-        {
-          $and: [
-            { 'bookings.startTime': { $lt: parsedEndTime } },
-            { 'bookings.endTime': { $gte: parsedEndTime } },
-          ],
-        },
-      ],
-    });
-
-    if(overlappingBooking){
-      return res.status(400).json({msg:"teacher is not available , try another slot"})
-    }
-        
-    // Book the teacher for the student
-    isStudentpresent.bookings.push({
-      teacher: isTeacherpresent._id,
-      startTime:parsedStartTime,
-      endTime:parsedEndTime,
-    });
-
-    await isStudentpresent.save();
-
-    return res.status(200).json({ message: 'Teacher booked successfully' });
-
-   } catch (error) {
-      console.log(error)
-      return res.status(500).json({msg:error.message})
+   const isStudentpresent= await StudentModel.findOne({userId})
+   if(!isStudentpresent){
+     return  res.status(404).send({msg:"invalid email of student"})
    }
+   
+   const isTeacherpresent= await TeacherModel.findOne(
+     { email:teacherEmail,
+       subjects: { $in: subject },
+       availability: { $in: [parsedStartTime.toLocaleDateString('en-US', options)]}
+     }
+   )
+   if(!isTeacherpresent){
+      return res.status(404).send({msg:"teacher is not available on this day , try another day"})
+   }
+ // checking the overlapping / conflict
 
- };
+   const overlappingBooking = await StudentModel.findOne({
+     'bookings.teacher': isTeacherpresent._id,
+     $or: [
+       {
+         $and: [
+           { 'bookings.startTime': { $lte: parsedStartTime } },
+           { 'bookings.endTime': { $gt: parsedStartTime } },
+         ],
+       },
+       {
+         $and: [
+           { 'bookings.startTime': { $lt: parsedEndTime } },
+           { 'bookings.endTime': { $gte: parsedEndTime } },
+         ],
+       },
+     ],
+   });
+
+   if(overlappingBooking){
+     
+     return res.status(400).send({msg:"teacher is not available , try another slot"})
+   }
+       
+   // Book the teacher for the student
+   isStudentpresent.bookings.push({
+     teacher: isTeacherpresent._id,
+     startTime:starttime,
+     endTime:endtime,
+   });
+
+   await isStudentpresent.save();
+
+   console.log(isStudentpresent)
+
+   return res.status(200).send({ status:200,msg: 'Teacher booked successfully' });
+
+  } catch (error) {
+     console.log(error)
+     return res.status(500).send({msg:error.message})
+  }
+
+};
+
+
+
+
 
  const getTeachers = async(req,res)=>{
   try {
