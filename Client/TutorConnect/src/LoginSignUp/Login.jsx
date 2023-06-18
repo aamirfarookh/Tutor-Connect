@@ -1,4 +1,6 @@
 // import React, { Component } from "react";
+import { useContext  } from "react";
+import { UserContext } from "../UserContext";
 
 import SigninImg from "./images/signin-image.jpg";
 import Logo from '../Landing/media/logo.png'
@@ -20,7 +22,7 @@ import GoogleButton from 'react-google-button'
 
 
 import { Link as LinkR } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 
 function Copyright(props) {
@@ -39,13 +41,53 @@ const defaultTheme = createTheme();
 
 
 const Login=()=> {
-  const handleSubmit = (event) => {
+
+  const {setName, setId, setEmail, setIsVarified}=useContext(UserContext)
+  const navigate= useNavigate()
+
+  function setCookie(name, value, expirationDays) {
+    const date = new Date();
+    date.setTime(date.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
+    const expires = 'expires=' + date.toUTCString();
+    document.cookie = name + '=' + value + ';' + expires + ';path=/';
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const userDetails={
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
+
+    await fetch(`http://localhost:4500/student/login`,{
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userDetails)
+    })
+    .then(res=> res.json())
+    .then(res=>{
+      // console.log(res)
+      if (res.msg == "Login success"){
+        setCookie("JAA_access_token",res.accessToken,1)
+        setCookie("JAA_refresh_token",res.refreshToken,4)
+        setName(res.user.name)
+        setId(res.user._id)
+        setEmail(res.user.email)
+        setIsVarified(res.user.isVerified)
+        
+        //redirect
+        navigate("/dashboard")
+
+      }
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+
+
   };
   
   const CustomBox=styled(Box)(({theme})=>({

@@ -1,27 +1,17 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
+
 
 export const UserContext = createContext({});
 
 export function UserContextProvider({ children }) {
-  const [username, setLoggedInUserName] = useState(null);
+  const [name, setName] = useState(null);
   const [id, setId] = useState(null);
-  useEffect(() => {
-    if (document.cookie) {
-      axios.get("/user/profile")
-        .then((response) => {
-          setLoggedInUserName(response.data.userName);
-          setId(response.data.userId);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, []);
-
+  const [email, setEmail] = useState(null);
+  const [isVarified, setIsVarified] = useState(null)
+  
   return (
-    <UserContext.Provider value={{ username, id, setLoggedInUserName, setId }}>
+    <UserContext.Provider value={{ name, id, email, isVarified, setName, setId, setEmail, setIsVarified }}>
       {children}
     </UserContext.Provider>
   );

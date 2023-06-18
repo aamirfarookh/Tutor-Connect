@@ -1,4 +1,6 @@
 // import React, { Component } from "react";
+import { useContext  } from "react";
+import { UserContext } from "../UserContext";
 
 import SignupImg from "./images/signup-image.jpg";
 import Logo from '../Landing/media/logo.png'
@@ -16,9 +18,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 import GoogleButton from 'react-google-button'
 import { Link as LinkR } from "react-router-dom";
+
+
 
 function Copyright(props) {
   return (
@@ -36,13 +39,47 @@ const defaultTheme = createTheme();
 
 
 const Signup=()=> {
-  const handleSubmit = (event) => {
+
+  const {name, id, email, isVarified, setName, setId, setEmail, setIsVarified}=useContext(UserContext)
+
+
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const userDetails={
       email: data.get('email'),
       password: data.get('password'),
-    });
+      name: data.get('firstName')+' '+data.get('lastName'),
+    };
+
+    await fetch(`http://localhost:4500/student/register`,{
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userDetails)
+    })
+    .then(res=> res.json())
+    .then(res=>{
+      // console.log(res)
+      if(res.msg === "Registration successful"){
+        
+        setName(res.user.name)
+        setId(res.user._id)
+        setEmail(res.user.email)
+        setIsVarified(res.user.isVerified)
+
+         //redirect
+
+         
+      }
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+
+
   };
   
   const CustomBox=styled(Box)(({theme})=>({
