@@ -8,7 +8,8 @@ const {
     verifyotp,
     resetpassword,
     bookaTeacher,
-    getTeachers
+    getTeachers,
+    myBookings
   } = require("../controllers/student.controller");
   const StudentRouter = require("express").Router();
   const { passport } = require("../config/google_Oauth");
@@ -31,6 +32,7 @@ const {
   StudentRouter.post("/verifyotp", verifyotp);
   StudentRouter.post("/resetpassword", resetpassword);
   StudentRouter.post("/bookteacher",auth,bookaTeacher);
+  StudentRouter.get("/mybookings",auth,myBookings)
   StudentRouter.get("/getteachers",auth,getTeachers);
   
 

@@ -91,7 +91,7 @@ const loginUser = async (req, res) => {
 
     // Storing tokens in cookies.
     res.cookie("JAA_access_token", accessToken);
-    res.cookie("JAA_refresh_token", refreshToken,);
+    res.cookie("JAA_refresh_token", refreshToken);
 
     res.status(200).send({ msg: "Login success", accessToken, refreshToken });
   } catch (error) {
@@ -255,7 +255,7 @@ const resetpassword = async (req, res) => {
 /// Book a teacher and the availibility
  const bookaTeacher =async(req,res)=>{
    try {
-    const {userId,endtime,starttime,subject}= req.body;
+    const {userId,teacherEmail,endtime,starttime,subject}= req.body;
 
     
     // Parse startTime and endTime into Date objects
@@ -268,14 +268,15 @@ const resetpassword = async (req, res) => {
       weekday: 'long' // Extract the full name of the day (e.g., "Monday")
     };
 
-    const isStudentpresent= await StudentModel.findOne({userId})
+    const isStudentpresent= await StudentModel.findOne({_id:userId})
     if(!isStudentpresent){
       return  res.status(404).send({msg:"invalid email of student"})
     }
-
+    
     const isTeacherpresent= await TeacherModel.findOne(
-      {subjects: { $in: subject },
-        availability: { $in: [parsedStartTime.toLocaleDateString('en-US', options)] },
+      { email:teacherEmail,
+        subjects: { $in: subject },
+        availability: { $in: [parsedStartTime.toLocaleDateString('en-US', options)]}
       }
     )
     if(!isTeacherpresent){
@@ -302,23 +303,26 @@ const resetpassword = async (req, res) => {
     });
 
     if(overlappingBooking){
-      return res.status(400).json({msg:"teacher is not available , try another slot"})
+      
+      return res.status(400).send({msg:"teacher is not available , try another slot"})
     }
         
     // Book the teacher for the student
     isStudentpresent.bookings.push({
       teacher: isTeacherpresent._id,
-      startTime:parsedStartTime,
-      endTime:parsedEndTime,
+      startTime:starttime,
+      endTime:endtime,
     });
 
     await isStudentpresent.save();
 
-    return res.status(200).json({ message: 'Teacher booked successfully' });
+    console.log(isStudentpresent)
+
+    return res.status(200).send({ status:200,msg: 'Teacher booked successfully' });
 
    } catch (error) {
       console.log(error)
-      return res.status(500).json({msg:error.message})
+      return res.status(500).send({msg:error.message})
    }
 
  };
@@ -326,12 +330,38 @@ const resetpassword = async (req, res) => {
  const getTeachers = async(req,res)=>{
   try {
       const teachers = await TeacherModel.find()
-      res.status(200).send({teachers})
+      res.status(200).send({msg:"teachers data success",teachers})
   } catch (error) {
       res.status(500).send({msg:error.message});
   }
 };
 
+
+const myBookings = async(req,res)=>{
+  try {
+   const {userId} = req.body;
+   const student = await StudentModel.findOne({userId});
+   if(student){
+    let bookingArr = []
+    await Promise.all(
+      student.bookings.map(async (booking) => {
+        const id = booking.teacher;
+        const bookedTeacher = await TeacherModel.findOne({ _id: id });
+        const bookingObj = {
+          teacher: bookedTeacher,
+          booking,
+        };
+        console.log(bookingObj);
+        bookingArr.push(bookingObj);
+      })
+    );
+    return res.status(200).send({msg:"student","data":bookingArr})
+   }
+   
+  } catch (error) {
+    res.status(500).send({msg:error.message})
+  }
+}
 module.exports = {
   registerNewUser,
   loginUser,
@@ -342,7 +372,8 @@ module.exports = {
   verifyotp,
   resetpassword,
   bookaTeacher,
-  getTeachers
+  getTeachers,
+  myBookings
 };
 
 

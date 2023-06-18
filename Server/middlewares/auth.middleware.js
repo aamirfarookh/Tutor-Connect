@@ -17,7 +17,7 @@ let auth = async (req, res, next) => {
       return res.send({ msg: "please login again, already logged out" });
     } else {
       jwt.verify(
-        JAA_access_token,
+        access_token,
         process.env.JWT_ACCESS_TOKEN_SECRET_KEY,
         async (err, payload) => {
           if (!payload) {
@@ -44,7 +44,7 @@ let auth = async (req, res, next) => {
               req.body.userId = payload._id;
               next();
             } else {
-              res.status(400).send({ msg: err.message});
+              res.status(400).send({ msg: err.message,error:"This error"});
             }
           } else {
             req.body.userId = payload._id;
