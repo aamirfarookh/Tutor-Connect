@@ -1,5 +1,3 @@
-Tutor Track is a 
-
 <h3>Tutor Connect is a full-stack web application designed to help students schedule appointments with tutors. It also includes login/signup using JWT and Google OAuth.<h3> 
 
 <h3>Features:</h3>
