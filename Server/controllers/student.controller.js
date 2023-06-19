@@ -93,7 +93,7 @@ const loginUser = async (req, res) => {
     res.cookie("JAA_access_token", accessToken);
     res.cookie("JAA_refresh_token", refreshToken);
 
-    res.status(200).send({ msg: "Login success", accessToken, refreshToken });
+    res.status(200).send({ msg: "Login success", accessToken, refreshToken, user: isUserPresent});
   } catch (error) {
     res.status(500).send({ msg: error.message });
   }
@@ -252,21 +252,24 @@ const resetpassword = async (req, res) => {
 };
 
 
-/// Book a teacher and the availibility
  const bookaTeacher =async(req,res)=>{
+
+
    try {
     const {userId,teacherEmail,endtime,starttime,subject}= req.body;
 
-    
-    // Parse startTime and endTime into Date objects
-    const parsedStartTime = new Date(starttime);
-    const parsedEndTime = new Date(endtime);
 
-    
+   
+   // Parse startTime and endTime into Date objects
+   const parsedStartTime = new Date(starttime);
+   const parsedEndTime = new Date(endtime);
 
-    const options = {
-      weekday: 'long' // Extract the full name of the day (e.g., "Monday")
-    };
+   
+
+   const options = {
+     weekday: 'long' // Extract the full name of the day (e.g., "Monday")
+   };
+
 
     const isStudentpresent= await StudentModel.findOne({_id:userId})
     if(!isStudentpresent){
@@ -314,7 +317,10 @@ const resetpassword = async (req, res) => {
       endTime:endtime,
     });
 
-    await isStudentpresent.save();
+
+
+
+
 
     console.log(isStudentpresent)
 
@@ -325,7 +331,7 @@ const resetpassword = async (req, res) => {
       return res.status(500).send({msg:error.message})
    }
 
- };
+
 
  const getTeachers = async(req,res)=>{
   try {
