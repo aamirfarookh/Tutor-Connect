@@ -10,7 +10,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
-const MainListItems=() => {
+const MainListItems=({setShow}) => {
   return (
     <>
     <React.Fragment>
@@ -18,19 +18,19 @@ const MainListItems=() => {
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="Dashboard" onclick={()=>setShow('teachers')}/>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="My Classes" onClick={{}}/>
+      <ListItemText primary="My Classes" onClick={()=>setShow('bookings')}/>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Teachers" />
+      <ListItemText primary="Teachers" onclick={()=>setShow('teachers')}/>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
@@ -38,12 +38,6 @@ const MainListItems=() => {
       </ListItemIcon>
       <ListItemText primary="Book A Teacher" />
     </ListItemButton>
-    {/* <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItemButton> */}
     </React.Fragment>
     </>
   )

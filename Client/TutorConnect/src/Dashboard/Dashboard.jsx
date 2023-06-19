@@ -1,6 +1,6 @@
 // import * as React from 'react';
 import Logo from '../Landing/media/logo.png'
-
+import * as React from 'react';
 import { useState, useContext, useEffect } from 'react'
 import { UserContext } from "../UserContext";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
@@ -21,10 +21,20 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PeopleIcon from '@mui/icons-material/People';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import LayersIcon from '@mui/icons-material/Layers';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import MainListItems from './MainListItems'
 import Chart from './Chart';
 import Teachers from './Teachers';
+import Booked from './Booked';
 import Orders from './Orders';
 
 function Copyright(props) {
@@ -96,10 +106,10 @@ const Dashboard=()=> {
     const [booked, setBooked] = useState([]);
 
 
-    const [showTeacherBook, setShowTeacherBook] = useState(false);
-    const [showBookedTeachers, setShowBookedTeachers]=useState(false);
+    const [show, setShow] = useState('teachers');
 
 
+    
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -150,8 +160,8 @@ const Dashboard=()=> {
           }) 
           .then((res)=>res.json())
             .then((res)=>{
-                console.log(res)
-                // setBooked(res)
+                // console.log(res)
+                setBooked(res.data)
             })
             .catch((err)=>{
                 console.log(err)
@@ -166,9 +176,12 @@ const Dashboard=()=> {
   useEffect(() => {
     fetchTeachers()
     fetchBooking()
-  }, [])
+  }, [show])
   
-
+//   useEffect(() => {
+//     console.log("showing "+show)
+//   }, [show])
+  
 
   const CustomBox = styled(Box)(({ theme }) => ({
     display: 'flex', 
@@ -176,6 +189,22 @@ const Dashboard=()=> {
     gap: '1rem', 
     flexWrap: 'wrap', 
     textAlign: 'center',
+    // marginBottom: theme.spacing(1),
+    [theme.breakpoints.down("md")]: {
+      
+    },
+    
+  }));
+
+  const CustomBox1 = styled(Box)(({ theme }) => ({
+    display: 'flex', 
+    flexDirection:'column',
+    width:'100%', 
+    gap: '1rem', 
+    flexWrap: 'wrap', 
+    textAlign: 'center',
+    justifyContent:"center",
+    alignItems: 'center',
     // marginBottom: theme.spacing(1),
     [theme.breakpoints.down("md")]: {
       
@@ -248,7 +277,38 @@ const Dashboard=()=> {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <MainListItems/>
+            {/* <MainListItems setShow={setShow}/> */}
+            
+                {/* <React.Fragment> */}
+                <ListItemButton onClick={()=>setShow("teachers")}>
+                <ListItemIcon>
+                    <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+                </ListItemButton>
+
+                <ListItemButton onClick={()=>setShow("bookings")}>
+                <ListItemIcon>
+                    <ShoppingCartIcon />
+                </ListItemIcon>
+                <ListItemText primary="My Classes" />
+                </ListItemButton>
+
+                <ListItemButton onClick={()=>setShow("teachers")}>
+                <ListItemIcon>
+                    <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Teachers" />
+                </ListItemButton>
+
+                <ListItemButton onClick={()=>setShow("teachers")}>
+                <ListItemIcon>
+                    <BarChartIcon />
+                </ListItemIcon>
+                <ListItemText primary="Book A Teacher" />
+                </ListItemButton>
+                {/* </React.Fragment> */}
+            
             <Divider sx={{ my: 1 }} />
             {/* {secondaryListItems} */}
           </List>
@@ -270,35 +330,12 @@ const Dashboard=()=> {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 
 
-                {/* BookedTecher Component */}
-                {showBookedTeachers && (
-                    <CustomBox>
-                    {
-                        teachers.map(el=>(
-                            <Paper key={el._id}
-                                sx={{
-                                    p: 2,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    height: 'fit-content',
-                                    // justifyContent: 'space-around',
-                                    alignItems: 'center',
-                                    width: '275px',
-                                    borderRadius: '2rem'
-                                }}
-                            >
-                            <Teachers {...el}/>
-                            </Paper>
-                        ))
-                    }
-                    </CustomBox>
-                )}
 
-                {/* ShowTecher Component */}
-                {showTeacherBook && (
-                    <CustomBox>
+                {
+                    show==='bookings' ? (
+                        <CustomBox1>
                         {
-                            teachers.map(el=>(
+                            booked.map(el=>(
                                 <Paper key={el._id}
                                     sx={{
                                         p: 2,
@@ -307,17 +344,42 @@ const Dashboard=()=> {
                                         height: 'fit-content',
                                         // justifyContent: 'space-around',
                                         alignItems: 'center',
-                                        width: '275px',
-                                        borderRadius: '2rem'
+                                        width: '70%',
+                                        borderRadius: '2rem',
+                                        gap:'0.7rem'
                                     }}
                                 >
-                                <Teachers {...el}/>
+                                <Booked {...el}/>
                                 </Paper>
                             ))
                         }
-                    </CustomBox>
-                )}
+                        </CustomBox1>
+                    ):
+                    show==='teachers' ? (
+                        <CustomBox>
+                            {
+                                teachers.map(el=>(
+                                    <Paper key={el._id}
+                                        sx={{
+                                            p: 2,
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            height: 'fit-content',
+                                            // justifyContent: 'center',
+                                            alignItems: 'center',
+                                            width: '17rem',
+                                            borderRadius: '2rem'
+                                        }}
+                                    >
+                                    <Teachers {...el}/>
+                                    </Paper>
+                                ))
+                            }
+                        </CustomBox>
+                    ): null
+                }
 
+                
 
 
             <Copyright sx={{ pt: 4 }} />

@@ -271,7 +271,7 @@ const resetpassword = async (req, res) => {
    };
 
 
-    const isStudentpresent= await StudentModel.findOne({_id:userId})
+    const isStudentpresent= await StudentModel.findOne({userId})
     if(!isStudentpresent){
       return  res.status(404).send({msg:"invalid email of student"})
     }
@@ -320,7 +320,7 @@ const resetpassword = async (req, res) => {
 
 
 
-
+    await isStudentpresent.save();
 
     console.log(isStudentpresent)
 
@@ -331,7 +331,7 @@ const resetpassword = async (req, res) => {
       return res.status(500).send({msg:error.message})
    }
 
-
+}
 
  const getTeachers = async(req,res)=>{
   try {
@@ -368,6 +368,9 @@ const myBookings = async(req,res)=>{
     res.status(500).send({msg:error.message})
   }
 }
+
+
+
 module.exports = {
   registerNewUser,
   loginUser,
