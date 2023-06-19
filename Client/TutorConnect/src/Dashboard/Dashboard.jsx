@@ -29,6 +29,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import LogoutIcon from '@mui/icons-material/Logout';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import MainListItems from './MainListItems'
@@ -36,6 +37,11 @@ import Chart from './Chart';
 import Teachers from './Teachers';
 import Booked from './Booked';
 import Orders from './Orders';
+
+import { useNavigate } from "react-router-dom";
+
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content';
 
 function Copyright(props) {
   return (
@@ -108,8 +114,62 @@ const Dashboard=()=> {
 
     const [show, setShow] = useState('teachers');
 
+    const navigate= useNavigate()
+    const MySwal = withReactContent(Swal)
 
-    
+    async function handleLogout(){
+        try {
+            const token = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('JAA_access_token='))
+            .split('=')[1];
+            await fetch("http://localhost:4500/student/logout" , {
+                headers:{
+                    "content-type":"application/json",
+                    authorization:token
+                }
+            })
+            .then((res)=>res.json())
+            .then((res)=>{
+                console.log(res)
+                if(res.msg === "Logout successful!"){
+                    MySwal.fire({
+                        title: res.msg,
+                        position: 'center',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didOpen: () => {
+                          // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+                          MySwal.showLoading()
+                        },
+                      }).then(() => {
+                        return MySwal.fire({
+                          title: <p>Redirecting to Landing Page...</p>
+                        })
+                    })
+
+                    setTimeout(() => {
+                        navigate('/')
+                    }, 2500);
+                }else{
+                    MySwal.fire({
+                        title: res.msg,
+                        position: 'center',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        icon: 'error',
+                        didOpen: () => {
+                          // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+                          MySwal.showLoading()
+                        },
+                    })
+                }
+            })
+            
+        } catch (error) {
+            console.log(error)
+        }
+    } 
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -306,6 +366,12 @@ const Dashboard=()=> {
                     <BarChartIcon />
                 </ListItemIcon>
                 <ListItemText primary="Book A Teacher" />
+                </ListItemButton>
+                <ListItemButton onClick={handleLogout}>
+                <ListItemIcon>
+                    <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Log out" />
                 </ListItemButton>
                 {/* </React.Fragment> */}
             

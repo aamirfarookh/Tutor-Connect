@@ -103,7 +103,9 @@ const loginUser = async (req, res) => {
 const logoutUser = async (req, res) => {
   try {
     const { JAA_access_token, JAA_refresh_token } = req?.cookies;
-    if (!JAA_access_token || !JAA_refresh_token)
+    const token= req.headers.authorization
+    console.log(token)
+    if (!token)
       return res.status(400).send({ msg: "Unauthorized!" });
 
     client.mset(

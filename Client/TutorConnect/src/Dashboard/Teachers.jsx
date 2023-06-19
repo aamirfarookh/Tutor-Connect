@@ -20,9 +20,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers';
 
-// function preventDefault(event) {
-//   event.preventDefault();
-// }
+
+
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 
 const Teachers=({availability, email, hourlyRate,name, qualification, subjects, _id })=> {
 
@@ -34,7 +36,7 @@ const Teachers=({availability, email, hourlyRate,name, qualification, subjects, 
   const [endTime, setEndTime] = useState('');
   const [subject, setSubject] = useState('');
 
-
+  const MySwal = withReactContent(Swal)
 
   const handleChange = (event) => {
     setAge(Number(event.target.value) || '');
@@ -74,7 +76,35 @@ const Teachers=({availability, email, hourlyRate,name, qualification, subjects, 
         body:JSON.stringify(payload)
       })
       .then((res)=>res.json())
-      .then((res)=>console.log(res))
+      .then((res)=>{
+        console.log(res)
+        handleClose()
+        if(res.msg==="teacher is not available , try another slot" || res.msg==="teacher is not available on this day , try another day"){
+          MySwal.fire({
+            title: res.msg,
+            icon: 'error',
+            position: 'center',
+            timer: 2500,
+            showConfirmButton: true,
+            didOpen: () => {
+              MySwal.showLoading()
+            },
+          })
+        }else{
+          MySwal.fire({
+            title: res.msg,
+            icon: 'success',
+            position: 'center',
+            timer: 2500,
+            showConfirmButton: true,
+            didOpen: () => {
+              MySwal.showLoading()
+            },
+          })
+        }
+      })
+
+
       .then(err=>console.log(err))
     } catch (error) {
       console.log(error)
@@ -105,8 +135,6 @@ const Teachers=({availability, email, hourlyRate,name, qualification, subjects, 
           <DialogTitle>Fill the form</DialogTitle>
           <DialogContent>
             <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
-
-
 
 
               <FormControl action="" style={{ m: 1, minWidth: 120 }}>

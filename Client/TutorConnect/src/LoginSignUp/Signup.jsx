@@ -20,7 +20,10 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import GoogleButton from 'react-google-button'
 import { Link as LinkR } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 
 function Copyright(props) {
@@ -40,8 +43,9 @@ const defaultTheme = createTheme();
 
 const Signup=()=> {
 
-  const {name, id, email, isVarified, setName, setId, setEmail, setIsVarified}=useContext(UserContext)
-
+  const {setName, setId, setEmail, setIsVarified}=useContext(UserContext)
+  const navigate= useNavigate()
+  const MySwal = withReactContent(Swal)
 
 
   const handleSubmit = async (event) => {
@@ -71,8 +75,38 @@ const Signup=()=> {
         setIsVarified(res.user.isVerified)
 
          //redirect
+         MySwal.fire({
+          title: res.msg,
+          position: 'center',
+          showConfirmButton: false,
+          timer: 1500,
+          didOpen: () => {
+            // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+            MySwal.showLoading()
+          },
+        }).then(() => {
+          return MySwal.fire({
+            title: <p>Redirecting to Login Page...</p>
+          })
+        })
 
+        setTimeout(() => {
+          //redirect
+          navigate("/login")
+        }, 1500);
          
+      }else{
+        MySwal.fire({
+          title: res.msg,
+          position: 'center',
+          showConfirmButton: false,
+          timer: 1500,
+          icon: 'error',
+          didOpen: () => {
+            // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+            MySwal.showLoading()
+          },
+        })
       }
     })
     .catch((err)=>{
