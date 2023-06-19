@@ -24,6 +24,10 @@ import GoogleButton from 'react-google-button'
 import { Link as LinkR } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+
 
 function Copyright(props) {
   return (
@@ -44,6 +48,9 @@ const Login=()=> {
 
   const {setName, setId, setEmail, setIsVarified}=useContext(UserContext)
   const navigate= useNavigate()
+
+  const MySwal = withReactContent(Swal)
+
 
   function setCookie(name, value, expirationDays) {
     const date = new Date();
@@ -78,9 +85,38 @@ const Login=()=> {
         setEmail(res.user.email)
         setIsVarified(res.user.isVerified)
         
-        //redirect
-        navigate("/dashboard")
+        MySwal.fire({
+          title: res.msg,
+          position: 'center',
+          showConfirmButton: false,
+          timer: 1500,
+          didOpen: () => {
+            // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+            MySwal.showLoading()
+          },
+        }).then(() => {
+          return MySwal.fire({
+            title: <p>Redirecting to dashboard...</p>
+          })
+        })
 
+        setTimeout(() => {
+          //redirect
+          navigate("/dashboard")
+        }, 1500);
+
+      }else{
+        MySwal.fire({
+          title: res.msg,
+          position: 'center',
+          showConfirmButton: false,
+          timer: 1500,
+          icon: 'error',
+          didOpen: () => {
+            // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+            MySwal.showLoading()
+          },
+        })
       }
     })
     .catch((err)=>{
