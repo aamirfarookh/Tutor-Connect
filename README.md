@@ -53,35 +53,39 @@ Open the application in your web browser at http://localhost:4500. <br>
  
 <h3>Landing Page</h3>
   
-![index](https://github.com/aamirfarookh/ossified-nerve-3185/blob/main/Frontend/assets/index.png)
+![index](https://github.com/aamirfarookh/adjoining-steel-5186/blob/main/Client/screenshots/1.png)
   
 <h3>Login Page</h3>
   
-![index.html](https://github.com/aamirfarookh/ossified-nerve-3185/blob/main/Frontend/assets/login.png)  
+![index.html](https://github.com/aamirfarookh/adjoining-steel-5186/blob/main/Client/screenshots/Login.png)  
   
 <h3>Register Page</h3>
   
-![index.html](https://github.com/aamirfarookh/ossified-nerve-3185/blob/main/Frontend/assets/register.png)
+![index.html](https://github.com/aamirfarookh/adjoining-steel-5186/blob/main/Client/screenshots/register.png)
   
-<h3>Forgot Password</h3>
+<!-- <h3>Forgot Password</h3>
   
-![index.html](https://github.com/aamirfarookh/ossified-nerve-3185/blob/main/Frontend/assets/forget.png) 
+![index.html](https://github.com/aamirfarookh/ossified-nerve-3185/blob/main/Frontend/assets/forget.png)  -->
   
-<h3>Reset Password</h3>
+<!-- <h3>Reset Password</h3>
   
-![index.html](https://github.com/aamirfarookh/ossified-nerve-3185/blob/main/Frontend/assets/reset.png)
+![index.html](https://github.com/aamirfarookh/ossified-nerve-3185/blob/main/Frontend/assets/reset.png) -->
   
-<h3>Lobby</h3>
+<h3>Dashboard</h3>
   
-![index.html](https://github.com/aamirfarookh/ossified-nerve-3185/blob/main/Frontend/assets/lobby.png)  
+![index.html](https://github.com/aamirfarookh/adjoining-steel-5186/blob/main/Client/screenshots/dash.png) 
+
+<h3>Bookings</h3>
   
-<h3>Room</h3>
+![index.html](https://github.com/aamirfarookh/adjoining-steel-5186/blob/main/Client/screenshots/Bookings.png)  
   
-![index.html](https://github.com/aamirfarookh/ossified-nerve-3185/blob/main/Frontend/assets/room.png)  
+<!-- <h3>Room</h3>
   
-<h3>Leader Board</h3>
+![index.html](https://github.com/aamirfarookh/ossified-nerve-3185/blob/main/Frontend/assets/room.png)   -->
   
-![index.html](https://github.com/aamirfarookh/ossified-nerve-3185/blob/main/Frontend/assets/leader.png)  
+<!-- <h3>Leader Board</h3>
+  
+![index.html](https://github.com/aamirfarookh/ossified-nerve-3185/blob/main/Frontend/assets/leader.png)   -->
   
 <h3>Deployed Links:</h3>
   
