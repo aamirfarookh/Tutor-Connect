@@ -47,8 +47,8 @@ Open the application in your web browser at http://localhost:4500. <br>
 <h3>Contributors:</h3>
   
   - <a href="http://github.com/aamirfarookh">Amir Bhat</a>: Google OAuth | Admin CRUD backend | Authentication
-  - <a href="http://github.com/parimal-paramanik">Parimal Paramanik</a>: Backend Logic for Logic | Signup | Student Booking
-  - <a href="http://github.com/shubham-Adhya">Shubham Adhya</a>: Implemented the whole front-end in React 
+  - <a href="http://github.com/parimal-paramanik">Parimal Paramanik</a>: Backend Logic for Login | Signup | Student Booking
+  - <a href="http://github.com/shubham-Adhya">Shubham Adhya</a>: Implemented the whole front-end in React using function based components
   
  
 <h3>Landing Page</h3>
