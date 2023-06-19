@@ -44,7 +44,7 @@ let auth = async (req, res, next) => {
               req.body.userId = payload._id;
               next();
             } else {
-              res.status(400).send({ msg: err.message});
+              res.status(400).send({ msg: err.message,error:"This error"});
             }
           } else {
             req.body.userId = payload._id;
