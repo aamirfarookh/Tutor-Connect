@@ -41,7 +41,7 @@ Responsive Design: The Teacher App is designed to be responsive, ensuring compat
 
 <h3>Run npm server to start the application.</h3>
 
-Open the application in your web browser at http://localhost:4500. <br>
+Open the application in your web browser at localhost:4500. <br>
 <strong>Note:</strong> You will need to obtain your own Google OAuth client ID and client secret by creating a project on the Google Developers Console.
 
 <h3>Contributors:</h3>
