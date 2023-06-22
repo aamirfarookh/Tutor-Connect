@@ -89,8 +89,8 @@ Open the application in your web browser at http://localhost:4500. <br>
   
 <h3>Deployed Links:</h3>
   
-  - FrontEnd: 
-  - Backend: 
+  - FrontEnd: https://6490828db952090b510531d5--cheery-pie-1dc9b0.netlify.app/
+  - Backend: https://ruby-fragile-angelfish.cyclic.app/
   
 <h3>License:</h3>
 This project is licensed under the MIT License. See the LICENSE file for details.
