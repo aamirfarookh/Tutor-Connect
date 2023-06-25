@@ -67,7 +67,7 @@ const Teachers=({availability, email, hourlyRate,name, qualification, subjects, 
         .find(row => row.startsWith('JAA_access_token='))
         .split('=')[1];
         // console.log(token)
-      await fetch(`http://localhost:4500/student/bookteacher`,{
+      await fetch(`https://ruby-fragile-angelfish.cyclic.app/student/bookteacher`,{
         method:"POST",
         headers:{
             "content-type":"application/json",

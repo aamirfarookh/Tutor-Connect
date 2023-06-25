@@ -123,7 +123,7 @@ const Dashboard=()=> {
             .split('; ')
             .find(row => row.startsWith('JAA_access_token='))
             .split('=')[1];
-            await fetch("http://localhost:4500/student/logout" , {
+            await fetch("https://ruby-fragile-angelfish.cyclic.app/student/logout" , {
                 headers:{
                     "content-type":"application/json",
                     authorization:token
@@ -184,7 +184,7 @@ const Dashboard=()=> {
         .find(row => row.startsWith('JAA_access_token='))
         .split('=')[1];
         // console.log(token)
-        await fetch("http://localhost:4500/student/getteachers",{
+        await fetch("https://ruby-fragile-angelfish.cyclic.app/student/getteachers",{
             headers:{
                 "content-type":"application/json",
                  authorization: token 
@@ -211,7 +211,7 @@ const Dashboard=()=> {
         .find(row => row.startsWith('JAA_access_token='))
         .split('=')[1];
         // console.log(token)
-          await fetch("http://localhost:4500/student/mybookings",{
+          await fetch("https://ruby-fragile-angelfish.cyclic.app/student/mybookings",{
             method:"GET",  
             headers:{
                   "content-type":"application/json",

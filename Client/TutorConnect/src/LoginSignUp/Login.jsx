@@ -67,7 +67,7 @@ const Login=()=> {
       password: data.get('password'),
     };
 
-    await fetch(`http://localhost:4500/student/login`,{
+    await fetch(`https://ruby-fragile-angelfish.cyclic.app/student/login`,{
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
