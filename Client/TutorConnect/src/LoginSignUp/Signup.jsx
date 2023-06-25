@@ -57,7 +57,7 @@ const Signup=()=> {
       name: data.get('firstName')+' '+data.get('lastName'),
     };
 
-    await fetch(`http://localhost:4500/student/register`,{
+    await fetch(`https://ruby-fragile-angelfish.cyclic.app/student/register`,{
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
